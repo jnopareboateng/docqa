@@ -39,3 +39,37 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# venv files
+venv/
+.env.local
+.env
+__pycache__/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Document storage and temp files
+/documents/
+/uploads/
+/tmp/
+*.pdf
+*.doc
+*.docx
+*.txt
+/storage/
+
+# Data files
+*.sqlite
+*.db
+/data/
+
+# Logs
+/logs/
+*.log
+
+# Cache
+.cache/
