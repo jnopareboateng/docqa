@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -12,6 +12,7 @@ export function FileUpload() {
   const [uploadProgress, setUploadProgress] = useState(0)
   const { toast } = useToast()
   const { setCurrentDocument } = useDocument()
+  const formRef = useRef<HTMLFormElement>(null)
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -59,7 +60,9 @@ export function FileUpload() {
       })
 
       // Reset form
-      event.currentTarget.reset()
+      if (formRef.current) {
+        formRef.current.reset()
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -74,7 +77,7 @@ export function FileUpload() {
 
   return (
     <Card className="p-4">
-      <form onSubmit={onSubmit} className="space-y-4">
+      <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col gap-2">
           <input 
             type="file"

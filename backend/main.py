@@ -8,6 +8,11 @@ import os
 from typing import List, Optional
 import json
 from contextlib import asynccontextmanager
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from utils.document_processor import DocumentProcessor
 from utils.storage import DocumentStorage
@@ -37,7 +42,7 @@ app = FastAPI(lifespan=lifespan)
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Be explicit about allowed origins
+    allow_origins=["http://localhost:3003"],  # Be explicit about allowed origins
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
@@ -115,13 +120,20 @@ async def delete_document(doc_id: str):
 @app.post("/ask")
 async def ask_question(request: QuestionRequest):
     try:
+        logger.info(f"Processing question for document: {request.document_id}")
+        
         # Get document content
         doc = doc_storage.get_document(request.document_id)
         if not doc:
+            logger.error(f"Document not found: {request.document_id}")
             raise AppError("Document not found", 404)
         
         # Initialize Gemini model
-        model = genai.GenerativeModel('gemini-pro')
+        try:
+            model = genai.GenerativeModel('gemini-pro')
+        except Exception as e:
+            logger.error(f"Failed to initialize Gemini model: {str(e)}")
+            raise AppError("Failed to initialize AI model", 500)
         
         # Prepare the prompt with document context
         prompt = f"""Context from document '{doc['filename']}':
@@ -132,12 +144,19 @@ Question: {request.question}
 Please answer the question based on the given context. If the answer cannot be found in the context, say so."""
         
         # Generate response
-        response = model.generate_content(prompt)
-        
-        return {"answer": response.text}
+        try:
+            response = model.generate_content(prompt)
+            if not response or not hasattr(response, 'text'):
+                logger.error("Invalid response from Gemini API")
+                raise AppError("Failed to generate response", 500)
+            return {"answer": response.text}
+        except Exception as e:
+            logger.error(f"Error generating response: {str(e)}")
+            raise AppError(f"Failed to generate response: {str(e)}", 500)
     
     except Exception as e:
-        handle_error(e)
+        logger.error(f"Error processing question: {str(e)}")
+        raise e
 
 if __name__ == "__main__":
     import uvicorn

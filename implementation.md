@@ -1,6 +1,7 @@
 # Document QA Web App Implementation Guide
 
 ## Project Structure
+```
 election-analysis/
 ├── src/
 ├── app/
@@ -25,7 +26,7 @@ election-analysis/
 │   └── index.d.ts
 ├── public/
 └── // ...config files
-
+```
 ## Implementation Steps
 
 ### 1. Initial Setup
@@ -45,11 +46,11 @@ npm install -D @types/uuid
 
 ### 3. Environment Setup
 ```bash
-# Create .env.local in project root
-touch .env.local
+# Create .env in project root
+touch .env
 ```
 
-Add to .env.local:
+Add to .env:
 ```
 GOOGLE_API_KEY=your_gemini_api_key
 ```
@@ -59,9 +60,9 @@ GOOGLE_API_KEY=your_gemini_api_key
 # Action Items
 
 1. **Environment Setup**
-   - **Create `.env.local` File**
+   - **Create `.env` File**
      ```bash
-     touch .env.local
+     touch .env
      ```
    - **Add Environment Variable**
      ```
