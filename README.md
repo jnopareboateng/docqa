@@ -1,29 +1,31 @@
 # Document QA Web App Implementation Guide
-election-analysis/
+
+```
+doc-qa/
 ├── src/
-├── app/
-│   ├── api/ # API routes using App Router
-│   │   └── upload/
-│   │       └── route.ts
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/ # shadcn components
-│   ├── chat/ # chat-related components
-│   │   ├── chat-interface.tsx
-│   │   └── message-list.tsx
-│   └── doc/ # document-related components
-│       ├── document-viewer.tsx
-│       └── file-upload.tsx
-├── lib/ # utility functions
-│   ├── utils.ts
-│   ├── api-client.ts
-│   └── doc-parser.ts
-├── types/ # type definitions
-│   └── index.d.ts
+│   ├── app/
+│   │   ├── api/           # API routes using App Router
+│   │   │   └── upload/
+│   │   │       └── route.ts
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── ui/           # shadcn components
+│   │   ├── chat/         # chat-related components
+│   │   │   ├── chat-interface.tsx
+│   │   │   └── message-list.tsx
+│   │   └── doc/          # document-related components
+│   │       ├── document-viewer.tsx
+│   │       └── file-upload.tsx
+│   ├── lib/              # utility functions
+│   │   ├── utils.ts
+│   │   ├── api-client.ts
+│   │   └── doc-parser.ts
+│   └── types/            # type definitions
+│       └── index.d.ts
 ├── public/
 └── // ...config files
-
+```
 ## 1. Project Setup
 ```bash
 npx create-next-app@latest doc-qa --typescript --tailwind --eslint
@@ -120,55 +122,3 @@ npx shadcn-ui@latest add button input textarea toast dialog sheet scroll-area se
 - Add pagination for chat history
 - Optimize document processing
 - Configure proper chunking for large documents
-
-## Updated Project Structure
-```
-doc-qa/
-├── src/
-│   ├── app/
-│   │   ├── api/           # API routes using App Router
-│   │   │   └── upload/
-│   │   │       └── route.ts
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/
-│   │   ├── ui/           # shadcn components
-│   │   ├── chat/         # chat-related components
-│   │   │   ├── chat-interface.tsx
-│   │   │   └── message-list.tsx
-│   │   └── doc/          # document-related components
-│   │       ├── document-viewer.tsx
-│   │       └── file-upload.tsx
-│   ├── lib/              # utility functions
-│   │   ├── utils.ts
-│   │   ├── api-client.ts
-│   │   └── doc-parser.ts
-│   └── types/            # type definitions
-│       └── index.d.ts
-├── public/
-└── // ...config files
-```
-
-## Next Steps for Implementation:
-
-1. Set up the API route for file uploads:
-
-Let's create these files in sequence:
-
-1. First, create the API route
-2. Then the components
-3. Finally, the utility functions
-
-Would you like me to start with implementing the file upload API route using the App Router pattern?
-
-Here's what we'll implement first:
-
-```bash
-/src/app/api/upload/route.ts
-/src/components/doc/file-upload.tsx
-/src/lib/utils.ts
-```
-
-Let me know if you want to proceed with these files, and I'll provide the implementations.
-
-Also, let me know if you'd like to use any specific data storage solution (local filesystem, S3, etc.) for the uploaded files, and if you have any specific requirements for file types to be supported.
